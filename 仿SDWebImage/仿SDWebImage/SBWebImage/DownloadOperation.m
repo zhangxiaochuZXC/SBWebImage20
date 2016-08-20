@@ -39,13 +39,17 @@
     NSData *data = [NSData dataWithContentsOfURL:URL];
     UIImage *image = [UIImage imageWithData:data];
     
+    // 断言 : 保证某一个条件一定满足,如果不满足就崩溃,并且自定义崩溃信息;是C语言开发者的最爱;
+    // 只在开发时有效!方便多人开发的;
+    NSAssert(self.finishedBlock != nil, @"下载完成的回调不能为空!");
+    
     // 图片下载完成之后,需要把图片传递到VC
-    if (self.finishedBlock != nil) {
+//    if (self.finishedBlock != nil) {
         // 需要在主线程,把图片对象传递到控制器
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             self.finishedBlock(image);
         }];
-    }
+//    }
 }
 
 // 图片下载的主方法 : 这个方法执行完才执行main,现有操作,再有main
