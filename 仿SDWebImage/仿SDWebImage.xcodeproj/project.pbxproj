@@ -13,6 +13,7 @@
 		868704FB1D6856F400A960B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 868704F91D6856F400A960B8 /* Main.storyboard */; };
 		868704FD1D6856F400A960B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 868704FC1D6856F400A960B8 /* Assets.xcassets */; };
 		868705001D6856F400A960B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 868704FE1D6856F400A960B8 /* LaunchScreen.storyboard */; };
+		8687050A1D68583700A960B8 /* DownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 868705091D68583700A960B8 /* DownloadOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		868704FC1D6856F400A960B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		868704FF1D6856F400A960B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		868705011D6856F400A960B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		868705081D68583700A960B8 /* DownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadOperation.h; sourceTree = "<group>"; };
+		868705091D68583700A960B8 /* DownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,7 @@
 		868704EF1D6856F400A960B8 /* 仿SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
+				868705071D68582600A960B8 /* SBWebImage */,
 				868704F31D6856F400A960B8 /* AppDelegate.h */,
 				868704F41D6856F400A960B8 /* AppDelegate.m */,
 				868704F61D6856F400A960B8 /* ViewController.h */,
@@ -77,6 +81,15 @@
 				868704F11D6856F400A960B8 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		868705071D68582600A960B8 /* SBWebImage */ = {
+			isa = PBXGroup;
+			children = (
+				868705081D68583700A960B8 /* DownloadOperation.h */,
+				868705091D68583700A960B8 /* DownloadOperation.m */,
+			);
+			path = SBWebImage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +165,7 @@
 				868704F81D6856F400A960B8 /* ViewController.m in Sources */,
 				868704F51D6856F400A960B8 /* AppDelegate.m in Sources */,
 				868704F21D6856F400A960B8 /* main.m in Sources */,
+				8687050A1D68583700A960B8 /* DownloadOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
