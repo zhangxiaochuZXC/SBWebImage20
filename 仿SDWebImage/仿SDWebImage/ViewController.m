@@ -29,8 +29,6 @@
     DownloadOperation *op = [[DownloadOperation alloc] init];
     // 把自定义操作添加到队列
     [_queue addOperation:op];
-    
-    // 下一步 : 指定自定义操作执行的任务
 }
 
 - (void)didReceiveMemoryWarning {
