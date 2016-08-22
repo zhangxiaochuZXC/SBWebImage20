@@ -32,6 +32,14 @@
  */
 - (void)main
 {
+    // 不能再main方法一开始就做状态是否被取消的判断
+    // 因为 : 有可能操作已经把在执行了,但是取消消息还没有发送过来!
+    // 一般会在延迟操作的后面做判断,但是也可以在多个地方做多次判断
+//    if (self.isCancelled) {
+//        NSLog(@"取消 %@",self.URLString);
+//        return;
+//    }
+    
     NSLog(@"传入 %@",self.URLString);
     
     // 模拟延迟
@@ -42,6 +50,11 @@
     NSData *data = [NSData dataWithContentsOfURL:URL];
     UIImage *image = [UIImage imageWithData:data];
     
+    if (self.isCancelled) {
+        NSLog(@"取消 %@",self.URLString);
+        return;
+    }
+    
     // 断言 : 保证某一个条件一定满足,如果不满足就崩溃,并且自定义崩溃信息;是C语言开发者的最爱;
     // 只在开发时有效!方便多人开发的;
     NSAssert(self.finishedBlock != nil, @"下载完成的回调不能为空!");
@@ -50,6 +63,7 @@
 //    if (self.finishedBlock != nil) {
         // 需要在主线程,把图片对象传递到控制器
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            NSLog(@"完成 %@",self.URLString);
             self.finishedBlock(image);
         }];
 //    }

@@ -23,10 +23,19 @@
     NSOperationQueue *_queue;
     /// 数据源数组
     NSArray *_appsList;
+    /// 操作缓存池
+    NSMutableDictionary *_OPCache;
+    /// 保存上一次的下载地址
+    NSString *_lastURLString;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 实例化队列
+    _queue = [[NSOperationQueue alloc] init];
+    // 实例化操作缓存池
+    _OPCache = [[NSMutableDictionary alloc] init];
     
     [self loadJsonData];
 }
@@ -40,14 +49,30 @@
     AppsModel *app = _appsList[random];
     
     // 从随机模型里面,取出图片,去下载
-    // 实例化队列
-    _queue = [[NSOperationQueue alloc] init];
+    if (![app.icon isEqualToString:_lastURLString] && _lastURLString != nil) {
+        // 取出上一次的下载操作
+        DownloadOperation *lastOP = [_OPCache objectForKey:_lastURLString];
+        
+        // 调用取消方法 : 只是在改变操作的状态
+        // 如果要真真的取消操作,需要到操作内部去判断操作的状态
+        [lastOP cancel];
+        
+        // 把下载操作从下载操作缓存池移除
+        [_OPCache removeObjectForKey:app.icon];
+    }
+    
+    _lastURLString = app.icon;
     
     // 创建操作的同时传入图片地址和下载完成的回调
     DownloadOperation *op = [DownloadOperation downloadWithURLString:app.icon finishedBlock:^(UIImage *image) {
         // 赋值操作 (主线程)
         self.iconImageView.image = image;
+        // 把下载操作从下载操作缓存池移除
+        [_OPCache removeObjectForKey:app.icon];
     }];
+    
+    // 把操作添加到操作缓存池
+    [_OPCache setObject:op forKey:app.icon];
     
     // 把自定义操作添加到队列
     [_queue addOperation:op];
