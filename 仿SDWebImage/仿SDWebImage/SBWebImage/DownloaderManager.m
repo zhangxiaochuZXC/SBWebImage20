@@ -36,6 +36,9 @@
         _queue = [[NSOperationQueue alloc] init];
         _OPCache = [[NSMutableDictionary alloc] init];
         _imagesCache = [[NSMutableDictionary alloc] init];
+        
+        
+        UIImageView *imgView = [[UIImageView alloc] init];
     }
     
     return self;
