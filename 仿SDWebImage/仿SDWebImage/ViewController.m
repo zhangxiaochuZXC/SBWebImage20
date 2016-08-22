@@ -7,9 +7,9 @@
 //
 
 #import "ViewController.h"
-#import "DownloadOperation.h"
 #import "AFNetworking.h"
 #import "AppsModel.h"
+#import "DownloaderManager.h"
 
 @interface ViewController ()
 
@@ -63,19 +63,10 @@
     
     _lastURLString = app.icon;
     
-    // 创建操作的同时传入图片地址和下载完成的回调
-    DownloadOperation *op = [DownloadOperation downloadWithURLString:app.icon finishedBlock:^(UIImage *image) {
-        // 赋值操作 (主线程)
+    // 单例接管下载操作
+    [[DownloaderManager sharedManager] downloadWithURLString:app.icon finishedBlock:^(UIImage *image) {
         self.iconImageView.image = image;
-        // 把下载操作从下载操作缓存池移除
-        [_OPCache removeObjectForKey:app.icon];
     }];
-    
-    // 把操作添加到操作缓存池
-    [_OPCache setObject:op forKey:app.icon];
-    
-    // 把自定义操作添加到队列
-    [_queue addOperation:op];
 }
 
 // 这个 `loadJsonData`方法执行完了之后,我们再去点击屏幕

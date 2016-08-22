@@ -59,9 +59,9 @@
     // 只在开发时有效!方便多人开发的;
     NSAssert(self.finishedBlock != nil, @"下载完成的回调不能为空!");
     
-    // 图片下载完成之后,需要把图片传递到VC
+    // 图片下载完成之后,需要把图片传递到MANAGER
 //    if (self.finishedBlock != nil) {
-        // 需要在主线程,把图片对象传递到控制器
+        // 需要在主线程,把图片对象传递到MANAGER
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             NSLog(@"完成 %@",self.URLString);
             self.finishedBlock(image);
