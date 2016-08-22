@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "AFNetworking.h"
 #import "AppsModel.h"
-#import "DownloaderManager.h"
+#import "UIImageView+SBWebCache.h"
 
 @interface ViewController ()
 
@@ -19,23 +19,12 @@
 
 @implementation ViewController {
     
-    /// 全局队列
-    NSOperationQueue *_queue;
     /// 数据源数组
     NSArray *_appsList;
-    /// 操作缓存池
-    NSMutableDictionary *_OPCache;
-    /// 保存上一次的下载地址
-    NSString *_lastURLString;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // 实例化队列
-    _queue = [[NSOperationQueue alloc] init];
-    // 实例化操作缓存池
-    _OPCache = [[NSMutableDictionary alloc] init];
     
     [self loadJsonData];
 }
@@ -47,20 +36,9 @@
     int random = arc4random_uniform((u_int32_t)_appsList.count);
     // 随机取出模型
     AppsModel *app = _appsList[random];
-    
-    // 从随机模型里面,取出图片,去下载
-    if (![app.icon isEqualToString:_lastURLString] && _lastURLString != nil) {
-        
-        // 单例接管取消操作
-        [[DownloaderManager sharedManager] cancelWithLastURLString:_lastURLString];
-    }
-    
-    _lastURLString = app.icon;
-    
-    // 单例接管下载操作
-    [[DownloaderManager sharedManager] downloadWithURLString:app.icon finishedBlock:^(UIImage *image) {
-        self.iconImageView.image = image;
-    }];
+
+    // 分类接管图片的下载和展示
+    [self.iconImageView SB_setimageWithURLString:app.icon];
 }
 
 // 这个 `loadJsonData`方法执行完了之后,我们再去点击屏幕
@@ -104,61 +82,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)demo02
-{
-    // 实例化队列
-    _queue = [[NSOperationQueue alloc] init];
-    
-    NSString *URLString = @"http://img2.3lian.com/2014/c7/12/d/77.jpg";
-    
-    // 创建操作的同时传入图片地址和下载完成的回调
-    DownloadOperation *op = [DownloadOperation downloadWithURLString:URLString finishedBlock:^(UIImage *image) {
-        // 赋值操作 (主线程)
-        NSLog(@"%@ %@",image,[NSThread currentThread]);
-    }];
-    
-    /*
-     void (^finishedBlock)(UIImage *) = ^(UIImage *image) {
-     // 赋值操作 (主线程)
-     };
-     // 类方法实例化自定义操作
-     DownloadOperation *op = [DownloadOperation downloadWithURLString:URLString finishedBlock:finishedBlock];
-     */
-    
-    // 把自定义操作添加到队列
-    [_queue addOperation:op];
-}
-
-- (void)demo01
-{
-    // 实例化队列
-    _queue = [[NSOperationQueue alloc] init];
-    
-    // 实例化自定义操作
-    DownloadOperation *op = [[DownloadOperation alloc] init];
-    
-    // 向自定义操作内部传入图片地址
-//    op.URLString = @"http://img2.3lian.com/2014/c7/12/d/77.jpg";
-    
-    // 传入代码块到自定义操作对象
-//    [op setFinishedBlock:^(UIImage *image) {
-//        // 赋值操作 (主线程)
-//        NSLog(@"%@ %@",image,[NSThread currentThread]);
-//    }];
-    
-    /*
-     // 先定义等待执行的代码块
-     void (^finishedBlock)(UIImage *) = ^(UIImage *image) {
-     // 赋值操作 (主线程)
-     };
-     // 传入代码块
-     op.finishedBlock = finishedBlock;
-     */
-    
-    // 把自定义操作添加到队列
-    [_queue addOperation:op];
 }
 
 @end
