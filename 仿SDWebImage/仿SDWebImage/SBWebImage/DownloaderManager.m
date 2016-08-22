@@ -48,7 +48,7 @@
     
     // finishedBlock : 控制器传入的代码块
     
-    // 等待OP图片下载完成之后再去回调
+    // 等待OP把图片下载完成之后再去回调
     void (^MfinishedBlock)(UIImage *) = ^(UIImage *image) {
         
         // image : 是OP下载完成,回调到单例的
@@ -69,6 +69,22 @@
     
     // 把自定义操作添加到队列
     [_queue addOperation:op];
+}
+
+// 单例管理取消操作的主方法
+- (void)cancelWithLastURLString:(NSString *)lastURLString
+{
+    // 取出上一次的下载操作
+    DownloadOperation *lastOP = [_OPCache objectForKey:lastURLString];
+    
+    if (lastOP != nil) {
+        // 调用取消方法 : 只是在改变操作的状态
+        // 如果要真真的取消操作,需要到操作内部去判断操作的状态
+        [lastOP cancel];
+        
+        // 把下载操作从下载操作缓存池移除
+        [_OPCache removeObjectForKey:lastURLString];
+    }
 }
 
 @end

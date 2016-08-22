@@ -50,15 +50,9 @@
     
     // 从随机模型里面,取出图片,去下载
     if (![app.icon isEqualToString:_lastURLString] && _lastURLString != nil) {
-        // 取出上一次的下载操作
-        DownloadOperation *lastOP = [_OPCache objectForKey:_lastURLString];
         
-        // 调用取消方法 : 只是在改变操作的状态
-        // 如果要真真的取消操作,需要到操作内部去判断操作的状态
-        [lastOP cancel];
-        
-        // 把下载操作从下载操作缓存池移除
-        [_OPCache removeObjectForKey:app.icon];
+        // 单例接管取消操作
+        [[DownloaderManager sharedManager] cancelWithLastURLString:_lastURLString];
     }
     
     _lastURLString = app.icon;
