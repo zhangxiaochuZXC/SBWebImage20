@@ -15,6 +15,7 @@
 		860D65491D6A9B57005DD64A /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 860D65431D6A9B57005DD64A /* AFURLSessionManager.m */; };
 		860D654C1D6A9B7D005DD64A /* AppsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 860D654B1D6A9B7D005DD64A /* AppsModel.m */; };
 		860D654F1D6AA42A005DD64A /* DownloaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 860D654E1D6AA42A005DD64A /* DownloaderManager.m */; };
+		860D65521D6ADDF1005DD64A /* NSString+path.m in Sources */ = {isa = PBXBuildFile; fileRef = 860D65511D6ADDF1005DD64A /* NSString+path.m */; };
 		868704F21D6856F400A960B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 868704F11D6856F400A960B8 /* main.m */; };
 		868704F51D6856F400A960B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 868704F41D6856F400A960B8 /* AppDelegate.m */; };
 		868704F81D6856F400A960B8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 868704F71D6856F400A960B8 /* ViewController.m */; };
@@ -42,6 +43,8 @@
 		860D654B1D6A9B7D005DD64A /* AppsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppsModel.m; sourceTree = "<group>"; };
 		860D654D1D6AA42A005DD64A /* DownloaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloaderManager.h; sourceTree = "<group>"; };
 		860D654E1D6AA42A005DD64A /* DownloaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloaderManager.m; sourceTree = "<group>"; };
+		860D65501D6ADDF1005DD64A /* NSString+path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+path.h"; sourceTree = "<group>"; };
+		860D65511D6ADDF1005DD64A /* NSString+path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+path.m"; sourceTree = "<group>"; };
 		868704ED1D6856F400A960B8 /* 仿SDWebImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "仿SDWebImage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		868704F11D6856F400A960B8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		868704F31D6856F400A960B8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 		868705071D68582600A960B8 /* SBWebImage */ = {
 			isa = PBXGroup;
 			children = (
+				860D65501D6ADDF1005DD64A /* NSString+path.h */,
+				860D65511D6ADDF1005DD64A /* NSString+path.m */,
 				868705081D68583700A960B8 /* DownloadOperation.h */,
 				868705091D68583700A960B8 /* DownloadOperation.m */,
 				860D654D1D6AA42A005DD64A /* DownloaderManager.h */,
@@ -220,6 +225,7 @@
 				860D65491D6A9B57005DD64A /* AFURLSessionManager.m in Sources */,
 				868704F21D6856F400A960B8 /* main.m in Sources */,
 				860D65451D6A9B57005DD64A /* AFNetworkReachabilityManager.m in Sources */,
+				860D65521D6ADDF1005DD64A /* NSString+path.m in Sources */,
 				860D654F1D6AA42A005DD64A /* DownloaderManager.m in Sources */,
 				860D654C1D6A9B7D005DD64A /* AppsModel.m in Sources */,
 				8687050A1D68583700A960B8 /* DownloadOperation.m in Sources */,

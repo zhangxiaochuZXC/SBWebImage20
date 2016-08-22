@@ -14,6 +14,8 @@
     NSOperationQueue *_queue;
     /// 操作缓存池
     NSMutableDictionary *_OPCache;
+    /// 图片缓存池
+    NSMutableDictionary *_imagesCache;
 }
 
 + (instancetype)sharedManager
@@ -33,6 +35,7 @@
     if (self = [super init]) {
         _queue = [[NSOperationQueue alloc] init];
         _OPCache = [[NSMutableDictionary alloc] init];
+        _imagesCache = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -41,6 +44,17 @@
 // 单例下载图片的主方法
 - (void)downloadWithURLString:(NSString *)URLString finishedBlock:(void (^)(UIImage *))finishedBlock
 {
+    // 判断有没有缓存
+    if ([self checkCacheWithURLString:URLString]) {
+        
+        // 从内存缓存里面取出图片,回调到控制器
+        if (finishedBlock) {
+            finishedBlock([_imagesCache objectForKey:URLString]);
+        }
+        
+        return;
+    }
+    
     // 判断操作缓存池里面有没有要下载的操作,如果有,就直接返回.不再建立重复的下载操作
     if ([_OPCache objectForKey:URLString] != nil) {
         return;
@@ -57,6 +71,9 @@
             finishedBlock(image);
         }
         
+        // 实现内存缓存
+        [_imagesCache setObject:image forKey:URLString];
+        
         // 把下载操作从下载操作缓存池移除
         [_OPCache removeObjectForKey:URLString];
     };
@@ -69,6 +86,28 @@
     
     // 把自定义操作添加到队列
     [_queue addOperation:op];
+}
+
+/// 检查是否有缓存 : 零碎的垃圾代码抽取成一个完整的方法
+- (BOOL)checkCacheWithURLString:(NSString *)URLString
+{
+    // 先判断内存缓存
+    if ([_imagesCache objectForKey:URLString] != nil) {
+        NSLog(@"从内存中加载...");
+        return YES;
+    }
+    
+    // 取出沙盒里面的图片,再判断沙盒缓存
+    UIImage *cacheImage = [UIImage imageWithContentsOfFile:[URLString appendCachesPath]];
+    if (cacheImage) {
+        NSLog(@"从沙盒中加载...");
+        // 在内存缓存中再保存一份
+        [_imagesCache setObject:cacheImage forKey:URLString];
+        
+        return YES;
+    }
+    
+    return NO;
 }
 
 // 单例管理取消操作的主方法

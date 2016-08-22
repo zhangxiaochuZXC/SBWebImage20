@@ -55,6 +55,11 @@
         return;
     }
     
+    // 当操作没有取消时,才实现沙盒缓存
+    if (image) {
+        [data writeToFile:[self.URLString appendCachesPath] atomically:YES];
+    }
+    
     // 断言 : 保证某一个条件一定满足,如果不满足就崩溃,并且自定义崩溃信息;是C语言开发者的最爱;
     // 只在开发时有效!方便多人开发的;
     NSAssert(self.finishedBlock != nil, @"下载完成的回调不能为空!");
