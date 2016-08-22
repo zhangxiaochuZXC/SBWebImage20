@@ -34,6 +34,9 @@
 {
     NSLog(@"传入 %@",self.URLString);
     
+    // 模拟延迟
+    [NSThread sleepForTimeInterval:1.0];
+    
     // 下载图片
     NSURL *URL = [NSURL URLWithString:self.URLString];
     NSData *data = [NSData dataWithContentsOfURL:URL];
