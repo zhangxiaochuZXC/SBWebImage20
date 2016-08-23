@@ -30,6 +30,8 @@
     // stringByAppendingPathComponent : 会自动添加`/`
     NSString *filePath = [path stringByAppendingPathComponent:name];
     
+    NSLog(@"MD5编码之后的沙盒缓存路径 %@",filePath);
+    
     return filePath;
 }
 

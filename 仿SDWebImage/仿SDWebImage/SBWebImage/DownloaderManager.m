@@ -39,9 +39,27 @@
         _queue = [[NSOperationQueue alloc] init];
         _OPCache = [[NSCache alloc] init];
         _imagesCache = [[NSCache alloc] init];
+        
+        // 注册通知
+        // object:nil : 可以接受任何对象发送的`UIApplicationDidReceiveMemoryWarningNotification`通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearCache) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }
     
     return self;
+}
+
+/// 清理内存的主方法
+- (void)clearCache
+{
+    [_imagesCache removeAllObjects];
+    [_OPCache removeAllObjects];
+    [_queue cancelAllOperations];
+}
+
+/// 这个通知注册单例里面,只有当应用程序退出了这个方法才会调用
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 // 单例下载图片的主方法
